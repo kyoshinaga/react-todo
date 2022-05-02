@@ -9,6 +9,7 @@ export const App = () => {
   const [todoText, setTodoText] = useState();
   const [incompleteTodos, setIncompleteTodos] = useState([]);
   const [completeTodos, setCompleteTodos] = useState([]);
+  const limitLength = 5;
 
   const onChangeTodoText = (event) => setTodoText(event.target.value);
   const onClickAdd = () => {
@@ -41,7 +42,13 @@ export const App = () => {
         todoText={todoText}
         onChange={onChangeTodoText}
         onClick={onClickAdd}
+        disabled={incompleteTodos.length >= limitLength}
       />
+      {incompleteTodos.length >= limitLength && (
+        <p style={{ color: "red" }}>
+          登録可能上限（{limitLength}個）に達しました。消化してください。
+        </p>
+      )}
       <IncompleteTodoList
         todos={incompleteTodos}
         onClickComplete={onClickComplete}
